@@ -1,0 +1,20 @@
+:root {
+  /* Colors */
+  --main-bg-color: #1b1a17;
+  --light-bg-color: #242320;
+  --mark-color: #ff8303;
+  --mark-hover-color: #a35709;
+  --text-color: #f0e3ca;
+  --alert-text-color: #ffffff;
+  --share-button-background-color: #23221f;
+  --share-button-hover-background-color: #2a2926;
+  --modal-background-color: rgba(7, 7, 7, 0.89);
+  /* Font Sizes */
+  --input-text-size: 1rem;
+  --task-title-text-size: 1.57rem;
+  --task-body-text-size: 1rem;
+  --task-deadline-text-size: 0.7rem;
+  --all-task-done-text-size: 1.7rem;
+  --alert-text-size: 1.28rem;
+  --modal-button-text-size: 0.714rem;
+}

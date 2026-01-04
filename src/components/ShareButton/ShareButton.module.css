@@ -1,0 +1,12 @@
+.share_button {
+  border-radius: 48px;
+  width: 48px;
+  height: 48px;
+  background-color: var(--share-button-background-color);
+  border: 0px solid;
+}
+
+.share_button:hover,
+.share_button:active {
+  background-color: var(--share-button-hover-background-color);
+}

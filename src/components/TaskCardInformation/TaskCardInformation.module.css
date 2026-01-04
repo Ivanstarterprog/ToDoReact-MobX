@@ -1,0 +1,19 @@
+@import "@/shared/styles/vars.css";
+
+.task__card__data {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.task__card__title {
+  font-size: var(--task-title-text-size);
+  font-weight: 500;
+}
+.task__card__description {
+  font-size: var(--task-body-text-size);
+  font-weight: 400;
+}
+.task__card__deadline {
+  font-size: var(--task-deadline-text-size);
+  font-weight: 200;
+}

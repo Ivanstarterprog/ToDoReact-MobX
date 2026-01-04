@@ -1,0 +1,85 @@
+@import "@/shared/styles/vars.css";
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url("@/assets/fonts/Inter-variablefont_opszwght.ttf");
+}
+
+html {
+  height: 100%;
+  font-size: 18;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 14px;
+  }
+
+  @media (min-width: 1440px) {
+    font-size: 24px;
+  }
+}
+
+body {
+  margin: 0px;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
+  height: 100%;
+  font-family: Inter;
+  justify-content: center;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+main {
+  height: 100vh;
+  width: 100%;
+  padding: 23px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+  }
+  @media (min-width: 768px) {
+    width: 700px;
+  }
+}
+
+button {
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
+  box-shadow: none;
+  border-style: solid;
+  border-color: var(--mark-color);
+  &:hover {
+    background-color: var(--light-bg-color);
+    border-color: var(--mark-hover-color);
+    cursor: pointer;
+  }
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--mark-color);
+  border-radius: 4px;
+  background-color: var(--light-bg-color);
+  color: var(--text-color);
+  font-size: var(--input-text-size);
+  line-height: 18px;
+  padding: 6px;
+  align-self: stretch;
+  justify-self: stretch;
+}

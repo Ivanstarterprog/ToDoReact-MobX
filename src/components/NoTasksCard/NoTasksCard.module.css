@@ -1,0 +1,21 @@
+@import "@/shared/styles/vars.css";
+
+.tasks__no_tasks {
+  height: 100%;
+  margin-top: 100px;
+  font-size: var(--all-task-done-text-size);
+  color: var(--alert-text-color);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  p {
+    margin: 0px;
+  }
+}
+
+.tasks__no_task__separator {
+  border: 3px solid var(--mark-color);
+  width: 60%;
+}

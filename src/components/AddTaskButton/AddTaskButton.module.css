@@ -1,0 +1,6 @@
+.add__task__button {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border-width: 2px;
+  border-radius: 8px;
+}
