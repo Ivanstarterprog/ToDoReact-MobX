@@ -38,6 +38,7 @@ export class ModalStore {
       ...this.confirmModal,
       ...config,
       isOpen: true,
+      variant: config.variant || "confirmModal",
     };
     return new Promise((resolve) => {
       this.confirmModal.resolve = resolve;
