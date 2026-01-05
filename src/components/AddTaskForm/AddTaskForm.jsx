@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddTaskButton from "@components/AddTaskButton";
 import Task from "@entities/task";
 import styles from "./AddTaskForm.module.css";
+import { taskStore } from "../../stores/TaskStore";
 
 export const AddTaskForm = ({ onAddTask }) => {
   const [title, setTitle] = useState("");
@@ -15,7 +16,7 @@ export const AddTaskForm = ({ onAddTask }) => {
     const newTask = new Task();
     newTask.setTaskTitle(title.trim());
     newTask.setTaskBody(body.trim());
-    onAddTask(newTask);
+    taskStore.addTask(newTask);
     setTitle("");
     setBody("");
   };

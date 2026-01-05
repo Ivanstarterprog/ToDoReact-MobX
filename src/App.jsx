@@ -4,34 +4,12 @@ import TaskList from "@components/TaskList";
 import useConfirmModal from "@hooks/useConfirmModal";
 import useShareModal from "@hooks/useShareModal";
 import Task from "@entities/task";
-import { useEffect, useState } from "react";
-function App() {
-  const [tasks, setTasks] = useState([]);
+import { taskStore } from "@stores/TaskStore";
+import { observer } from "mobx-react-lite";
+export const App = observer(() => {
   const { confirm, ConfirmModal } = useConfirmModal();
   const { isOpen, taskTitle, taskBody, openShare, closeShare } =
     useShareModal();
-
-  useEffect(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    if (savedTasks.length === 0) return;
-
-    const tasksArray = JSON.parse(savedTasks);
-    const taskInstances = tasksArray.map((item) => Task.objectToTask(item));
-    setTasks(taskInstances);
-    if (tasksArray.length > 0) {
-      const maxId = Math.max(...tasksArray.map((task) => task.id));
-      Task.setNextId(maxId);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (tasks.length === 0) return;
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
-
-  const handleAddTask = (newTask) => {
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-  };
 
   const handleDeleteTask = async (taskToBeDeleted) => {
     const confirmed = await confirm();
@@ -39,9 +17,7 @@ function App() {
       return;
     }
 
-    setTasks((prevTasks) =>
-      prevTasks.filter((task) => task.id !== taskToBeDeleted.id)
-    );
+    taskStore.deleteTask(taskToBeDeleted.id);
   };
 
   const handleEditTask = async (taskToBeChanged) => {
@@ -56,15 +32,10 @@ function App() {
       return;
     }
 
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskToBeChanged.id ? updatedTaskData : task
-      )
-    );
+    taskStore.updateTask(taskToBeChanged.id, updatedTaskData);
   };
 
   const handleShareTask = (task) => {
-    console.log(task);
     openShare(task);
   };
 
@@ -78,14 +49,14 @@ function App() {
         taskBody={taskBody}
       />
       <TaskList
-        tasks={tasks}
+        tasks={taskStore.tasks}
         onDeleteTask={handleDeleteTask}
         onEditTask={handleEditTask}
         onShareTask={handleShareTask}
       />
-      <AddTaskForm onAddTask={handleAddTask} />
+      <AddTaskForm />
     </main>
   );
-}
+});
 
 export default App;
