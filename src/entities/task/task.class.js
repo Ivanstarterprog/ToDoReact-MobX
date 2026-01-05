@@ -15,6 +15,7 @@ export class Task {
     this.description = "";
     this.deadLineStart = new Date().toLocaleDateString("ru-RU");
     this.deadLineEnd = "";
+    this.isPinned = false;
     makeAutoObservable(this);
   }
 
@@ -30,6 +31,7 @@ export class Task {
       description: this.description,
       deadLineStart: this.deadLineStart,
       deadLineEnd: this.deadLineEnd,
+      isPinned: this.isPinned,
     };
   }
 
@@ -66,5 +68,8 @@ export class Task {
 
   setDeadLineEnd(data) {
     this.deadLineEnd = data;
+  }
+  togglePin() {
+    this.isPinned = !this.isPinned;
   }
 }
