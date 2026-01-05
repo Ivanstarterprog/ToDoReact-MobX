@@ -9,9 +9,11 @@ export const TaskList = observer(
     if (taskStore.tasks.length === 0) {
       return <NoTasksCard />;
     }
+
+    const tasksSorted = taskStore.sortedTasks;
     return (
       <div className={styles.tasks}>
-        {taskStore.tasks.map((task) => (
+        {tasksSorted.map((task) => (
           <TaskCard
             key={task.id}
             task={task}
