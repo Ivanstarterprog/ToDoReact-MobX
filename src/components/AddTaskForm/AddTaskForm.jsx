@@ -4,7 +4,7 @@ import Task from "@entities/task";
 import styles from "./AddTaskForm.module.css";
 import { taskStore } from "../../stores/TaskStore";
 
-export const AddTaskForm = ({ onAddTask }) => {
+export const AddTaskForm = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
