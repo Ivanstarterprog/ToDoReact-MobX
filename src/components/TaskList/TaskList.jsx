@@ -1,26 +1,26 @@
 import NoTasksCard from "@components/NoTasksCard";
 import TaskCard from "@components/TaskCard";
 import { observer } from "mobx-react-lite";
+import { taskStore } from "@stores/TaskStore";
 import styles from "./TaskList.module.css";
 
 export const TaskList = observer(
-  ({ tasks, onDeleteTask, onEditTask, onShareTask }) => {
-    if (!tasks || tasks.length === 0) {
+  ({ onDeleteTask, onEditTask, onShareTask }) => {
+    if (taskStore.tasks.length === 0) {
       return <NoTasksCard />;
     }
-    if (tasks)
-      return (
-        <div className={styles.tasks}>
-          {tasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onDeleteTask={onDeleteTask}
-              onEditTask={onEditTask}
-              onShareTask={onShareTask}
-            />
-          ))}
-        </div>
-      );
+    return (
+      <div className={styles.tasks}>
+        {taskStore.tasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            task={task}
+            onDeleteTask={onDeleteTask}
+            onEditTask={onEditTask}
+            onShareTask={onShareTask}
+          />
+        ))}
+      </div>
+    );
   }
 );
