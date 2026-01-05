@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction, autorun } from "mobx";
+import { makeAutoObservable, autorun } from "mobx";
 import Task from "@entities/task";
 
 export class TaskStore {
