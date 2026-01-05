@@ -1,5 +1,6 @@
 import styles from "./TaskCardInformation.module.css";
-export const TaskCardInformation = ({ task }) => {
+import { observer } from "mobx-react-lite";
+export const TaskCardInformation = observer(({ task }) => {
   return (
     <div className={styles.task__card__data}>
       <h3 className={styles.task__card__title}> {task.title} </h3>
@@ -7,4 +8,4 @@ export const TaskCardInformation = ({ task }) => {
       <h4 className={styles.task__card__deadline}> {task.deadLine()}</h4>
     </div>
   );
-};
+});

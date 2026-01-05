@@ -19,17 +19,23 @@ export class Task {
   }
 
   static setNextId(id) {
-    Task.nextId = ++id;
+    Task.nextId = id;
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      title: this.title,
+      body: this.body,
+      description: this.description,
+      deadLineStart: this.deadLineStart,
+      deadLineEnd: this.deadLineEnd,
+    };
   }
 
   static objectToTask(item) {
-    let task = new Task();
-    task.id = item.id;
-    task.title = item.title;
-    task.body = item.body;
-    task.description = item.description;
-    task.deadLineStart = item.deadLineStart;
-    task.deadLineEnd = item.deadLineEnd;
+    const task = new Task();
+    Object.assign(task, item);
     return task;
   }
 
@@ -52,7 +58,7 @@ export class Task {
     this.description = newFullDescription;
   }
 
-  setTaskNewData(taskData) {
+  setTaskData(taskData) {
     this.setTaskTitle(taskData.title);
     this.setTaskBody(taskData.body);
     this.setTaskDescription(taskData.description);

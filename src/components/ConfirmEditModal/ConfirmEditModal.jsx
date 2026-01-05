@@ -44,11 +44,11 @@ export const ConfirmEditModal = ({
       <ConfirmButtons
         onCancel={() => onClose(false)}
         onConfirm={() => {
-          const updatedTask = new Task();
-          updatedTask.setTaskTitle(title.trim());
-          updatedTask.setTaskBody(body.trim());
-          updatedTask.setTaskDescription(description.trim());
-          onClose(updatedTask);
+          onClose({
+            title: title.trim(),
+            body: body.trim(),
+            description: description.trim(),
+          });
         }}
         cancelText={cancelText}
         confirmText={confirmText}
