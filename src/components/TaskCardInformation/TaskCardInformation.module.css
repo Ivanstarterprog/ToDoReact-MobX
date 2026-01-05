@@ -3,6 +3,7 @@
 .task__card__data {
   display: flex;
   flex-direction: column;
+  width: 75%;
   gap: 3px;
 }
 .task__card__title {
@@ -12,6 +13,9 @@
 .task__card__description {
   font-size: var(--task-body-text-size);
   font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .task__card__deadline {
   font-size: var(--task-deadline-text-size);
