@@ -68,7 +68,8 @@ export class Task {
 
   setDeadLineEnd(data) {
     this.deadLineEnd = data;
-  }
+  } // после сдачи лабы хочу в спокойном темпе попыхтеть над её улучшением
+
   togglePin() {
     this.isPinned = !this.isPinned;
   }

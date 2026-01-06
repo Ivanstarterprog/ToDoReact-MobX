@@ -3,6 +3,8 @@ import Task from "@entities/task";
 
 export class TaskStore {
   tasks = [];
+  dragOverIndex = -1;
+  draggedTaskId = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -37,11 +39,20 @@ export class TaskStore {
   }
 
   get sortedTasks() {
-    return [...this.tasks].sort((a, b) => {
+    let tasks = [...this.tasks];
+    tasks.sort((a, b) => {
       if (a.isPinned && !b.isPinned) return -1;
       if (!a.isPinned && b.isPinned) return 1;
       return a.id - b.id;
     });
+    const pinned = this.tasks.filter((task) => task.isPinned);
+    const unpinned = this.tasks.filter((task) => !task.isPinned);
+
+    return [...pinned, ...unpinned];
+  }
+
+  get unpinnedTasks() {
+    return this.tasks.filter((task) => !task.isPinned);
   }
 
   setupAutoSave() {
@@ -90,6 +101,43 @@ export class TaskStore {
 
   getTaskById(taskId) {
     return this.tasks.find((task) => task.id === taskId);
+  }
+
+  getUnpinnedTaskIndex(taskId) {
+    return this.unpinnedTasks.findIndex((task) => task.id === taskId);
+  }
+
+  setDraggedTaskId(taskId) {
+    this.draggedTaskId = taskId;
+  }
+
+  setDragOverIndex(index) {
+    this.dragOverIndex = index;
+  }
+
+  moveTask(fromIndex, toIndex) {
+    if (fromIndex === toIndex) {
+      return;
+    }
+    const tasksCopy = [...this.tasks];
+    const [movedTask] = tasksCopy.splice(fromIndex, 1);
+    tasksCopy.splice(toIndex, 0, movedTask);
+    this.tasks = tasksCopy;
+  }
+
+  moveUnpinnedTask(fromIndex, toIndex) {
+    const unpinnedTasks = this.unpinnedTasks;
+
+    if (fromIndex >= unpinnedTasks.length || toIndex >= unpinnedTasks.length)
+      return;
+
+    const fromTask = unpinnedTasks[fromIndex];
+    const toTask = unpinnedTasks[toIndex];
+
+    const fromRealIndex = this.tasks.findIndex((t) => t.id === fromTask.id);
+    const toRealIndex = this.tasks.findIndex((t) => t.id === toTask.id);
+
+    this.moveTask(fromRealIndex, toRealIndex);
   }
 }
 

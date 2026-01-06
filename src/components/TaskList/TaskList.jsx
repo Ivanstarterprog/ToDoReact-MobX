@@ -13,15 +13,20 @@ export const TaskList = observer(
     const tasksSorted = taskStore.sortedTasks;
     return (
       <div className={styles.tasks}>
-        {tasksSorted.map((task) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onDeleteTask={onDeleteTask}
-            onEditTask={onEditTask}
-            onShareTask={onShareTask}
-          />
-        ))}
+        {tasksSorted.map((task, index) => {
+          const unpinnedIndex = taskStore.getUnpinnedTaskIndex(task.id);
+          const displayIndex = task.isPinned ? index : unpinnedIndex;
+          return (
+            <TaskCard
+              key={task.id}
+              task={task}
+              index={displayIndex}
+              onDeleteTask={onDeleteTask}
+              onEditTask={onEditTask}
+              onShareTask={onShareTask}
+            />
+          );
+        })}
       </div>
     );
   }

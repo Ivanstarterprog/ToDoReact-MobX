@@ -6,12 +6,33 @@ import { useState, useRef, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { taskStore } from "@stores/TaskStore";
 import { modalStore } from "@stores/ModalStore";
-export const TaskCard = observer(({ task }) => {
+import { useDragAndDrop } from "@hooks/useDragAndDrop";
+import dragHandle from "@assets/img/drag handle.svg";
+
+export const TaskCard = observer(({ task, index }) => {
   const [isButtonsVisible, setIsButtonsVisible] = useState(false);
   const cardRef = useRef(null);
+  const {
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+    isDragging,
+    handleDragLeave,
+    draggedTaskId,
+  } = useDragAndDrop();
+
+  const isDragged = draggedTaskId === task.id;
+
+  const unpinnedIndex = taskStore.getUnpinnedTaskIndex(task.id);
+  const showDragAndDrop = !task.isPinned && unpinnedIndex !== -1; //Очень хотел назвать переменную showDnD
 
   const handleCardClick = (e) => {
-    if (e.target.closest(`.${styles.delete__task__button}`)) {
+    if (isDragging) return;
+    if (
+      e.target.closest(`.${styles.delete__task__button}`) ||
+      e.target.closest(".task__card__pin_button") ||
+      e.target.closest(`.${styles.drag_handle}`)
+    ) {
       return;
     }
     setIsButtonsVisible(!isButtonsVisible);
@@ -54,6 +75,38 @@ export const TaskCard = observer(({ task }) => {
     modalStore.openShareModal(task);
   };
 
+  const handleDragStartLocal = (e) => {
+    if (!showDragAndDrop) return;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", task.id);
+
+    setTimeout(() => {
+      cardRef.current?.classList.add(styles.dragging);
+    }, 0);
+
+    handleDragStart(task.id);
+  };
+
+  const handleDragOverLocal = (e) => {
+    console.log("Id карточки, которую переношу:", task.id);
+
+    if (!showDragAndDrop || isDragged) {
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    e.dataTransfer.dropEffect = "move";
+
+    handleDragOver(e, task.id);
+  };
+
+  const handleDragEndLocal = (e) => {
+    cardRef.current?.classList.remove(styles.dragging);
+    handleDragEnd();
+  };
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (cardRef.current && !cardRef.current.contains(event.target)) {
@@ -67,8 +120,22 @@ export const TaskCard = observer(({ task }) => {
   }, []);
 
   return (
-    <div ref={cardRef}>
-      <div className={styles.task_card_container} onClick={handleCardClick}>
+    <div
+      ref={cardRef}
+      className={`
+        ${styles.task_card_wrapper}
+        ${isDragged ? styles.dragged : ""}
+      `}
+      draggable={showDragAndDrop}
+      onDragStart={handleDragStartLocal}
+      onDragOver={handleDragOverLocal}
+      onDragEnd={handleDragEndLocal}
+      onDragLeave={handleDragLeave}
+      onClick={handleCardClick}
+      data-task-id={task.id}
+      data-unpinned-index={unpinnedIndex}
+    >
+      <div className={styles.task_card_container}>
         <div className={styles.task__card}>
           <TaskCardInformation task={task} />
           <DeleteTaskButton onClick={handleDeleteTask} />
