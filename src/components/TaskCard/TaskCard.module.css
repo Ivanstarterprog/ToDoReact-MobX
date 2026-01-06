@@ -1,6 +1,7 @@
 @import "@/shared/styles/vars.css";
 
 .task_card_wrapper {
+  width: 100%;
   transition: all 0.3s ease;
   position: relative;
 }
@@ -28,4 +29,5 @@
 
 .dragged {
   z-index: 10;
+  width: 90%;
 }
