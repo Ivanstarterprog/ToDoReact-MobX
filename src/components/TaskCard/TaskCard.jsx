@@ -7,9 +7,8 @@ import { observer } from "mobx-react-lite";
 import { taskStore } from "@stores/TaskStore";
 import { modalStore } from "@stores/ModalStore";
 import { useDragAndDrop } from "@hooks/useDragAndDrop";
-import dragHandle from "@assets/img/drag handle.svg";
 
-export const TaskCard = observer(({ task, index }) => {
+export const TaskCard = observer(({ task }) => {
   const [isButtonsVisible, setIsButtonsVisible] = useState(false);
   const cardRef = useRef(null);
   const {
@@ -88,8 +87,6 @@ export const TaskCard = observer(({ task, index }) => {
   };
 
   const handleDragOverLocal = (e) => {
-    console.log("Id карточки, которую переношу:", task.id);
-
     if (!showDragAndDrop || isDragged) {
       return;
     }

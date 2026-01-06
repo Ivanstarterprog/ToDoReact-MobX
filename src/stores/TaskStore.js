@@ -16,7 +16,6 @@ export class TaskStore {
     const saved = localStorage.getItem("tasks");
     if (saved) {
       try {
-        console.log(saved);
         const tasksArray = JSON.parse(saved);
         this.tasks = tasksArray.map((item) => Task.objectToTask(item));
         if (tasksArray.length > 0) {
